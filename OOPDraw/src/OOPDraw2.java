@@ -77,7 +77,6 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 
 	private ShapeComposer currentComposer;
 
-	//ArrayList for storing the shapes
 	private ArrayList<MyShape> shapeList;
 
 	public static void main(String[] args) {
@@ -113,8 +112,7 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 		// position of the shape to be drawn
 		int x = arg0.getX();
 		int y = arg0.getY();
-		currentComposer.create(x, y);
-		shapeList.add(currentComposer.getShape()); // and add the shape (line) to the vector vt
+		shapeList.add(currentComposer.create(x, y)); // and add the shape (line) to the vector vt
 	}
 
 	@Override
@@ -125,6 +123,15 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 		int x = arg0.getX();
 		int y = arg0.getY();
 		currentComposer.complete(x, y);
+		try {
+			currentComposer = (ShapeComposer) Class.forName(currentComposer.getClass().getName()).newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		repaint();
 	}
 
@@ -178,40 +185,19 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 		setLayout(new FlowLayout());
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		ShapeComposerFactory factory = ShapeComposerFactory.getInstance();
 		// Create and Add the buttons
-		Button btnLine = new Button("Line");
-		btnLine.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new LineComposer();
-			}
-		});
-		Button btnEllipse = new Button("Ellipse");
-		btnEllipse.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new EllipseComposer();
-			}
-		});
-		Button btnRect = new Button("Rectangle");
-		btnRect.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new RectComposer();
-			}
-		});
-		
-		Button btnRoundRect = new Button("Rounded rectangle");
-		btnRoundRect.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new RoundRectComposer();
-			}
-		});
+		for(String name : factory.listComposerNames()) {
+			Button btn = new Button(name);
+			final String newComposerName = name;
+			btn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					currentComposer = ShapeComposerFactory.getInstance().createComposer(newComposerName);
+				}
+			});
+			add(btn);
+		}
 		
 		Button btnClear = new Button("Clear");
 		btnClear.addActionListener(new ActionListener() {
@@ -225,10 +211,6 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 				repaint();
 			}
 		});
-		add(btnLine);
-		add(btnEllipse);
-		add(btnRect);
-		add(btnRoundRect);
 		add(btnClear);
 	}
 

@@ -12,25 +12,18 @@ public class LineComposer implements ShapeComposer {
 		line = new MyLine();
 	}
 
-	@Override
-	public void create(int x, int y) {
+	public MyShape create(int x, int y) {
 		line.setStart(new Point(x, y));
+		return line;
 	}
 
-	@Override
 	public void expand(int x, int y) {
 		line.setEnd(new Point(x, y));
 		
 	}
 
-	@Override
 	public void complete(int x, int y) {
 		line.setEnd(new Point(x, y));
 		
-	}
-
-	@Override
-	public MyShape getShape() {
-		return line;
 	}
 }
