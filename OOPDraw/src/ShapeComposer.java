@@ -1,7 +1,3 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
-
 /**
  * base class AbstractShape
  *
@@ -23,8 +19,8 @@ public interface ShapeComposer
 	public void expand(int x, int y);
 	
 	public void complete(int x, int y);
-
-	public void Draw(Graphics2D g);
+	
+	public MyShape getShape();	
 	
 }
 	/**

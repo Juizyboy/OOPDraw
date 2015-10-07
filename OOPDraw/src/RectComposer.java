@@ -1,5 +1,3 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 
 // Class cRect for drawing Rects is derived
@@ -7,71 +5,41 @@ import java.awt.Point;
 
 class RectComposer implements ShapeComposer {
 
-	protected Point ptStart; // Start point of shape
+	private MyRect rect;
 
-	protected Point ptEnd; // End point of shape
-
-	protected int nwidth; // Width of shape
-
-	protected int nheight; // Height of shape
-
-	protected Color clrFront; // Default color
-
-	public void setEnd(Point pt) {
-		ptEnd = pt;
-	}
-
-	public void setWidth(int w) {
-		nwidth = w;
-	}
-
-	public void setHeight(int h) {
-		nheight = h;
-	}
-
-	public Point getStart() {
-		return ptStart;
-	}
-
-	public Point getEnd() {
-		return new Point(0, 0);
-	}
-
-	public int getWidth() {
-		return nwidth;
-	}
-
-	public int getHeight() {
-		return nheight;
-	}
-
-	// Drawing routine
-	public void Draw(Graphics2D g) {
-		g.setColor(Color.blue.brighter()); // Set default color
-		g.drawRect(ptStart.x, ptStart.y, nwidth, nheight);
+	public RectComposer() {
+		rect = new MyRect();
 	}
 
 	@Override
 	public void create(int x, int y) {
-		ptStart = new Point(x, y);
+		rect.setStart(new Point(x, y));
 		
 	}
 
 	@Override
 	public void expand(int x, int y) {
-		Point drawto = new Point(Math.max(x, ptStart.x), Math.max(y, ptStart.y));
-		ptStart = new Point(Math.min(x, ptStart.x), Math.min(y, ptStart.y));
-		nwidth = Math.abs((drawto.x - ptStart.x));
-		nheight = Math.abs((drawto.y - ptStart.y));
+		rect.setEnd(new Point(x,y));
+		//Point drawto = new Point(Math.max(x, rect.getPtStart().x), Math.max(y, rect.getPtStart().y));
+		
+		//rect.setPtStart(new Point(Math.min(x, rect.getPtStart().x), Math.min(y, rect.getPtStart().y)));
+		//rect.setNwidth(Math.abs((drawto.x - rect.getPtStart().x)));
+		//rect.setNheight(Math.abs((drawto.y - rect.getPtStart().y)));
 	}
 
 	@Override
 	public void complete(int x, int y) {
-		Point drawto = new Point(Math.max(x, ptStart.x), Math.max(y, ptStart.y));
-		ptStart = new Point(Math.min(x, ptStart.x), Math.min(y, ptStart.y));
-		nwidth = Math.abs((drawto.x - ptStart.x));
-		nheight = Math.abs((drawto.y - ptStart.y));
+		rect.setEnd(new Point(x,y));
+		//Point drawto = new Point(Math.max(x, rect.getPtStart().x), Math.max(y, rect.getPtStart().y));
+		//rect.setPtStart(new Point(Math.min(x, rect.getPtStart().x), Math.min(y, rect.getPtStart().y)));
+		//rect.setNwidth(Math.abs((drawto.x - rect.getPtStart().x)));
+		//rect.setNheight(Math.abs((drawto.y - rect.getPtStart().y)));
 		
+	}
+
+	@Override
+	public MyShape getShape() {
+		return rect;
 	}
 
 }

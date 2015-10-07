@@ -28,7 +28,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -78,10 +77,8 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 
 	private ShapeComposer currentComposer;
 
-	private Button btnLine, btnOval, btnRect, btnClear;
-
 	//ArrayList for storing the shapes
-	private ArrayList<ShapeComposer> shapeList;
+	private ArrayList<MyShape> shapeList;
 
 	public static void main(String[] args) {
 		OOPDraw2 frame = new OOPDraw2();
@@ -90,7 +87,7 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 
 	public OOPDraw2() {
 		// Do nothing in constructor off applet
-		shapeList = new ArrayList<ShapeComposer>();
+		shapeList = new ArrayList<MyShape>();
 		currentComposer = new LineComposer();
 		initGUI();
 	}
@@ -117,7 +114,7 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 		int x = arg0.getX();
 		int y = arg0.getY();
 		currentComposer.create(x, y);
-		shapeList.add(currentComposer); // and add the shape (line) to the vector vt
+		shapeList.add(currentComposer.getShape()); // and add the shape (line) to the vector vt
 	}
 
 	@Override
@@ -162,15 +159,13 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 	 */
 	@Override
 	public void paint(Graphics g) {
-		// To get a shadow effect
-		g.setColor(Color.black);
-		g.fillRect(0, 0, getSize().width, getSize().height);
 		g.setColor(new Color(255, 255, 154));
 		g.fillRect(1, 1, getSize().width - 3, getSize().height - 3);
+		g.setColor(Color.black);
 		for (int i = 0; i < shapeList.size(); i++) {
 			// Add the shapes to the vector
-			ShapeComposer sh = shapeList.get(i);
-			sh.Draw((Graphics2D) g);
+			MyShape shape = shapeList.get(i);
+			shape.Draw((Graphics2D) g);
 		}
 	}
 
@@ -179,12 +174,12 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 	 */
 	private void initGUI() {
 		setSize(800, 600);
-		setTitle("POSE 2.0 hairy drawing tool");
+		setTitle("Tekenen!");
 		setLayout(new FlowLayout());
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		// Create and Add the buttons
-		btnLine = new Button("Line");
+		Button btnLine = new Button("Line");
 		btnLine.addActionListener(new ActionListener() {
 
 			@Override
@@ -192,15 +187,15 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 				currentComposer = new LineComposer();
 			}
 		});
-		btnOval = new Button("Oval");
-		btnOval.addActionListener(new ActionListener() {
+		Button btnEllipse = new Button("Ellipse");
+		btnEllipse.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new OvalComposer();
+				currentComposer = new EllipseComposer();
 			}
 		});
-		btnRect = new Button("Rectangle");
+		Button btnRect = new Button("Rectangle");
 		btnRect.addActionListener(new ActionListener() {
 
 			@Override
@@ -208,7 +203,17 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 				currentComposer = new RectComposer();
 			}
 		});
-		btnClear = new Button("Clear");
+		
+		Button btnRoundRect = new Button("Rounded rectangle");
+		btnRoundRect.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentComposer = new RoundRectComposer();
+			}
+		});
+		
+		Button btnClear = new Button("Clear");
 		btnClear.addActionListener(new ActionListener() {
 
 			@Override
@@ -221,9 +226,10 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 			}
 		});
 		add(btnLine);
-		add(btnOval);
+		add(btnEllipse);
 		add(btnRect);
+		add(btnRoundRect);
 		add(btnClear);
 	}
 
-} // ALL ends :)
+}
