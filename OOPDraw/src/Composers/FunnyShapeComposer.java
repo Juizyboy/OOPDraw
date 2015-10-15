@@ -1,3 +1,7 @@
+package Composers;
+
+import Shapes.MyShape;
+import Shapes.MyFunnyShape;
 import java.awt.Point;
 
 public class FunnyShapeComposer implements ShapeComposer {

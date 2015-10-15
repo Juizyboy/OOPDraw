@@ -1,3 +1,4 @@
+package Shapes;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
@@ -5,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 public class MyRect implements MyShape{
 
 private Rectangle2D.Double rect;
+private Point start;
 	
 	public MyRect() {
 		rect = new Rectangle2D.Double();
@@ -13,11 +15,12 @@ private Rectangle2D.Double rect;
 	@Override
 	public void setStart(Point ptStart) {
 		rect.setRect(ptStart.x, ptStart.y, rect.getHeight(), rect.getWidth());
+		start = ptStart;
 	}
 
 	@Override
 	public void setEnd(Point ptEnd) {
-		rect.setRect(rect.getX(), rect.getY(), ptEnd.x-rect.getX(), ptEnd.y-rect.getY());
+		rect.setFrameFromDiagonal(start, ptEnd);
 	}
 	
 	public Rectangle2D.Double getRectangle() {

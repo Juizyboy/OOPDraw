@@ -1,3 +1,4 @@
+package Shapes;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
@@ -5,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 public class MyEllipse implements MyShape{
 
 	private Ellipse2D.Double ellipse;
+	private Point start;
 	
 	public MyEllipse() {
 		ellipse = new Ellipse2D.Double();
@@ -13,11 +15,12 @@ public class MyEllipse implements MyShape{
 	@Override
 	public void setStart(Point ptStart) {
 		ellipse.setFrame(ptStart.x, ptStart.y, ellipse.getHeight(), ellipse.getWidth());
+		start = ptStart;
 	}
 
 	@Override
 	public void setEnd(Point ptEnd) {
-		ellipse.setFrame(ellipse.getX(), ellipse.getY(), ptEnd.x-ellipse.getX(), ptEnd.y-ellipse.getY());
+		ellipse.setFrameFromDiagonal(start, ptEnd);
 	}
 	
 	public Ellipse2D.Double getEllipse() {
@@ -27,7 +30,5 @@ public class MyEllipse implements MyShape{
 	// Drawing routine
 		public void Draw(Graphics2D g) {
 			g.draw(ellipse);
-			//g.setColor(Color.green.darker()); // Set default color
-			//g.drawOval(ellipse.getPtStart().x, ellipse.getPtStart().y, ellipse.getNwidth(), oval.getNheight());
 		}
 }

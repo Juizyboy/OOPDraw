@@ -1,4 +1,7 @@
+package Composers;
 import java.awt.Point;
+import Shapes.MyShape;
+import Shapes.MySmiley;
 
 public class SmileyComposer implements ShapeComposer {
 	

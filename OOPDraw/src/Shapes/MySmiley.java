@@ -1,3 +1,4 @@
+package Shapes;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ private Point headStart;
 	@Override
 	public void setEnd(Point ptEnd) {
 		int differenceX = ptEnd.x - headStart.x;
-		int differenceY = ptEnd.x - headStart.x;
+		int differenceY = ptEnd.y - headStart.y;
 		shapes.get("head").setEnd(ptEnd);
 		
 		shapes.get("lefteye").setStart(new Point(new Double(headStart.x + differenceX*0.20).intValue(), new Double(headStart.y + differenceY*0.20).intValue()));

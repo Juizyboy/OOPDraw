@@ -1,3 +1,6 @@
+package Composers;
+import Shapes.MyShape;
+import Shapes.MyEllipse;
 import java.awt.Point;
 
 /**

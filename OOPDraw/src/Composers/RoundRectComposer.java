@@ -1,3 +1,6 @@
+package Composers;
+import Shapes.MyShape;
+import Shapes.MyRoundRect;
 import java.awt.Point;
 
 /**

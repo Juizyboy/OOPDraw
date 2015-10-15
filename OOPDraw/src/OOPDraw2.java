@@ -24,6 +24,7 @@
  * bad happens. In short "DO WHAT YOU WANT BUT DONT BLAME ME !" 
  *****************************************************************/
 import java.awt.Button;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -36,6 +37,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import Shapes.MyShape;
+import Composers.ShapeComposer;
+import Composers.ShapeComposerFactory;
 
 /**
  * Filename: OOPDraw2.java<br/>
@@ -87,7 +93,7 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 	public OOPDraw2() {
 		// Do nothing in constructor off applet
 		shapeList = new ArrayList<MyShape>();
-		currentComposer = new LineComposer();
+		currentComposer = ShapeComposerFactory.getInstance().createComposer("Line");
 		initGUI();
 	}
 
@@ -166,7 +172,7 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 	 */
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(new Color(255, 255, 154));
+		g.setColor(Color.white);
 		g.fillRect(1, 1, getSize().width - 3, getSize().height - 3);
 		g.setColor(Color.black);
 		for (int i = 0; i < shapeList.size(); i++) {
@@ -180,6 +186,7 @@ public class OOPDraw2 extends JFrame implements MouseListener, MouseMotionListen
 	 * method initializes GUI components
 	 */
 	private void initGUI() {
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setTitle("Tekenen!");
 		setLayout(new FlowLayout());

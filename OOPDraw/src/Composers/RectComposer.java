@@ -1,3 +1,6 @@
+package Composers;
+import Shapes.MyShape;
+import Shapes.MyRect;
 import java.awt.Point;
 
 // Class cRect for drawing Rects is derived

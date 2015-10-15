@@ -1,3 +1,5 @@
+package Composers;
+import Shapes.MyShape;
 /**
  * base class AbstractShape
  *

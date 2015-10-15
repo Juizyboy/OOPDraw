@@ -1,3 +1,4 @@
+package Composers;
 public class ShapeComposerFactory {
 	
 	private static ShapeComposerFactory instance = null;
